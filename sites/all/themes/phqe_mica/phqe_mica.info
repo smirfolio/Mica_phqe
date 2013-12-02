@@ -1,0 +1,20 @@
+screenshot  = screenshot.png
+name        = phqe_mica  subtheme
+description = Use this theme to customize your Mica. Parent theme will be overridden during Mica upgrade, but not this one.
+core        = 7.x
+base theme  = mica_bootstrap
+
+stylesheets[all][] = css/phqe_mica.css
+
+regions[navigation]     = 'Navigation'
+regions[header]         = 'Top Bar'
+regions[highlighted]    = 'Highlighted'
+regions[help]           = 'Help'
+regions[content]        = 'Content'
+regions[sidebar_first]  = 'Primary'
+regions[sidebar_second] = 'Secondary'
+regions[footer]         = 'Footer'
+; Information added by obiba.org packaging script on Wed, 20 Nov 2013 15:02:29 -0500
+version = 7.x-8.3-dev
+project = phqe_mica
+datestamp = 1384977749

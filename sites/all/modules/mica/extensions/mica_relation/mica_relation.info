@@ -1,0 +1,14 @@
+name = "Mica Relation"
+description = "Mica Relation"
+core = "7.x"
+package = Mica
+php = "5.2.4"
+
+dependencies[] = entity
+dependencies[] = search_api
+dependencies[] = mica_core
+
+files[] = includes/mica_relation.entity.inc; Information added by obiba.org packaging script on Tue, 19 Nov 2013 11:07:16 -0500
+version = 7.x-8.3-dev
+project = mica_relation
+datestamp = 1384877236

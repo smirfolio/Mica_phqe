@@ -1,0 +1,17 @@
+
+a.link_text {
+    color: #495961;
+}
+
+a.link_text:hover {
+    text-decoration: none;
+    color: #495961;
+}
+
+.navbar-inner {
+    background-color: #FAFAFA;
+    background-image: linear-gradient(to bottom, #FFFFFF, #002495);
+    background-repeat: repeat-x;
+}
+
+

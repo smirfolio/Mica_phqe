@@ -1,0 +1,57 @@
+<?php
+/**
+ * @file
+ * 
+ * Installation file for the Progress module
+ * 
+ */
+
+function progress_schema() {
+  $schema = array();
+
+  $schema['progress'] = array(
+    'description' => 'Progress',
+    'fields' => array(
+      'name' => array(
+        'description' => 'Name of progress',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ),
+      'progress' => array(
+        'description' => 'Progress status',
+        'type' => 'float',
+        'size' => 'big',
+        'not null' => TRUE,
+      ),
+      'message' => array(
+        'description' => 'Message for current progress',
+        'type' => 'text',
+        'not null' => TRUE,
+      ),
+      'start' => array(
+        'description' => 'Start time in unix timestamp',
+        'type' => 'float',
+        'size' => 'big',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'end' => array(
+        'description' => 'End time in unix timestamp',
+        'type' => 'float',
+        'size' => 'big',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'current' => array(
+        'description' => 'Current time in unix timestamp',
+        'type' => 'float',
+        'size' => 'big',
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('name'),
+  );
+
+  return $schema;
+}

@@ -1,0 +1,13 @@
+name = Mica Opal View formats
+description = Provides Opal view XML formatter for the REST server.
+core = 7.x
+package = Mica
+
+dependencies[] = rest_server
+dependencies[] = mica_datasets
+
+files[] = ServicesOpalFormatter.inc
+; Information added by obiba.org packaging script on Tue, 19 Nov 2013 11:07:16 -0500
+version = 7.x-8.3-dev
+project = mica_opal_view
+datestamp = 1384877236

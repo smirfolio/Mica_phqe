@@ -1,0 +1,23 @@
+screenshot  = screenshot.png
+name        = Mica Bootstrap
+description = Mica Bootstrap subtheme
+core        = 7.x
+base theme  = bootstrap
+
+stylesheets[all][] = 'css/mica_bootstrap.css'
+stylesheets[all][] = 'css/mica_bootstrap_responsive.css'
+
+scripts[] = 'bootstrap/js/bootstrap.min.js'
+
+regions[navigation]     = 'Navigation'
+regions[header]         = 'Top Bar'
+regions[highlighted]    = 'Highlighted'
+regions[help]           = 'Help'
+regions[content]        = 'Content'
+regions[sidebar_first]  = 'Primary'
+regions[sidebar_second] = 'Secondary'
+regions[footer]         = 'Footer'
+; Information added by obiba.org packaging script on Wed, 20 Nov 2013 15:02:29 -0500
+version = 7.x-8.3-dev
+project = mica_bootstrap
+datestamp = 1384977749

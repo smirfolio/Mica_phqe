@@ -1,0 +1,16 @@
+name = Mica Bootstrap Config
+description = Mica Bootstrap Theme Configuration
+core = 7.x
+package = Mica
+dependencies[] = ctools
+dependencies[] = strongarm
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:2
+features[variable][] = theme_mica_bootstrap_settings
+features[variable][] = theme_mica_subtheme_settings
+features[variable][] = theme_phqe_bootstrap_settings
+features[variable][] = theme_phqe_mica_settings
+; Information added by obiba.org packaging script on Tue, 19 Nov 2013 11:07:16 -0500
+version = 7.x-8.3-dev
+project = mica_bootstrap_config
+datestamp = 1384877236

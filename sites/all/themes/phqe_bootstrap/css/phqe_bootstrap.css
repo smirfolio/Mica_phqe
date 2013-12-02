@@ -1,0 +1,43 @@
+a.link_text {
+    color: #495961; 
+}
+
+a.link_text:hover {
+    text-decoration: none; 
+    color: black; 
+}
+
+.harmonization_title {
+    background: url("/sites/default/files/harmonization_vertical_line.png") no-repeat scroll left center transparent;
+    padding-left: 16px;
+    padding-bottom: 15px;
+}
+
+.about-logo{
+    float: right;
+    margin-right:150px;
+}
+
+fieldset legend {
+    background-color: #D2D2D2;
+    color: #495961;
+    font-size: 16.25px;
+    margin-bottom: 0;
+}
+
+.page-node-1 .page-header{
+    background-image: url("/sites/default/files/flag-qc-50.gif");
+    padding-left: 60px;
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding-top: 9px;
+}
+
+.home-link{
+    font-weight: bold;
+    font-size: 16px;
+}
+
+ul.language-switcher-locale-url{
+    list-style-type: none;
+}

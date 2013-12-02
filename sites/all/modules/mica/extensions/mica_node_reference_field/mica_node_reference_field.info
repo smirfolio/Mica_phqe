@@ -1,0 +1,12 @@
+name = Mica Node Reference Field
+description = Adaptation of Node Reference Field to display relations for Mica
+core = 7.x
+package = Mica
+
+dependencies[] = node_reference
+
+
+; Information added by obiba.org packaging script on Tue, 19 Nov 2013 11:07:16 -0500
+version = 7.x-8.3-dev
+project = mica_node_reference_field
+datestamp = 1384877236

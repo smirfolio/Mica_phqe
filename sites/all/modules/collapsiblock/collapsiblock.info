@@ -1,0 +1,17 @@
+name =  Collapsiblock
+description = Makes blocks collapsible.
+package = User interface
+core = 7.x
+configure = admin/config/user-interface/collapsiblock
+scripts[] = collapsiblock.js
+stylesheets[all][] = collapsiblock.css
+files[] = collapsiblock.install
+files[] = collapsiblock.module
+
+
+; Information added by drush on 2013-11-18
+version = "7.x-1.0+2-dev"
+core = "7.x"
+project = "collapsiblock"
+datestamp = "1384811127"
+
