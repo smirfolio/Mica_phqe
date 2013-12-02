@@ -207,15 +207,10 @@ function _mica_studies_block_study_populations($study, $show_draft)
                     $content[$index_pop] = node_view($pop, 'full', $language->language);
                     $content[$index_pop]['body']['#markup'] = "</div>";
                 } else {
-                    $content[$index_pop] = node_view($pop, 'full');;
+                    $content[$index_pop] = node_view($pop, 'full');
                 }
             } else if ($show_draft || (isset($pop->workbench_moderation['published']) && $pop->vid == $pop->workbench_moderation['published']->vid)) {
-                $content[$index_pop] = node_view($pop, 'full', $language->language);
-                if(isset($content[$index_pop]['field_pop_src_recruit'])){
-                $content[$index_pop]['field_pop_src_recruit'] = _mica_studies_Field_source_recruitment_population($pop);
-                }
-dpm($pop);
-dpm($content);
+                $content[$index_pop] = node_view($pop, 'full');
             }
         }
     }
@@ -223,27 +218,6 @@ dpm($content);
         'subject' => t('Populations') . '<a name="populations"> </a>',
         'content' => array_filter($content),
     );
-}
-
-function _mica_studies_Field_source_recruitment_population($pop){
-    $wrapper = entity_metadata_wrapper('node', $pop);
-
-    $field_view = field_view_field('node', $wrapper->value(), 'field_pop_src_recruit', array(
-        'label' => 'inline',
-        'weight' => 11,
-        'type' => module_exists('i18n') ? 'i18n_list_default' : 'list_default',
-    ));
-
-   $src_recruitement = $wrapper->field_pop_src_recruit->value();
-    /*
-    if (in_array('other', $design) && !empty($other_sp)) {
-        $design_other_sp_view = field_view_field('node', $wrapper->value(), 'field_design_other_sp');
-        $label = '<span class="other-sub-title">' . $field_view[count($design) - 1]['#markup'] . ': </span>';
-        $field_view[count($design) - 1]['#markup'] = $label .'<span class="other-sub-value">'. $design_other_sp_view[0]['#markup'] .'</span>';
-    }
-    */
-    return $field_view;
-
 }
 
 function _mica_studies_sort_dce_by_title($x, $y)
