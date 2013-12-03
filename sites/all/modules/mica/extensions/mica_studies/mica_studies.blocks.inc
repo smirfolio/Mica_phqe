@@ -110,7 +110,7 @@ function _mica_studies_block_study_supp_infos($study)
     if (is_numeric($study)) {
         $study = node_load($study);
     }
-    $content = array(field_view_field('node', $study, 'field_supp_infos', array('label' => 'hidden')));
+    $content = array(field_view_field('node', $study, 'field_supp_infos', array('label' => 'hidden','type' => module_exists('i18n') ? 'i18n_text' : 'text')));
     return array(
         'subject' => t('Supplementary Information') . '<a name="supplementary-info"> </a>',
         'content' => array_filter($content),
