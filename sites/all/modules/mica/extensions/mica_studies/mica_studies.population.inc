@@ -1,6 +1,7 @@
 <?php
 
-function _mica_studies_population_view($node, $view_mode, $langcode) {
+function _mica_studies_population_view($node, $view_mode, $langcode)
+{
     _mica_studies_population_view_selection_criteria($node);
     _mica_studies_population_view_recruitment_sources($node);
     _mica_studies_population_view_nb_participants($node);
@@ -55,7 +56,10 @@ function _mica_studies_population_view($node, $view_mode, $langcode) {
     $breadcrumb = _mica_studies_menu_generate_breadcrumbs('node/' . $study_id);
 
     // generate specific breadcrumbs for population pages pages
-    $current_breadcrumbs = menu_get_active_breadcrumb();
+    if (empty($breadcrumb)) {
+        $current_breadcrumbs = menu_get_active_breadcrumb();
+    }
+
     if (!isset($current_breadcrumbs[1])) {
         $breadcrumbs = array();
         $breadcrumbs[] = l(t('Home'), '');
@@ -66,7 +70,8 @@ function _mica_studies_population_view($node, $view_mode, $langcode) {
     }
 }
 
-function _mica_studies_population_normalize_rows(&$dce_rows) {
+function _mica_studies_population_normalize_rows(&$dce_rows)
+{
     foreach ($dce_rows as &$dce_row) {
         $dce_row['data']['start'] = _mica_sudies_format_dce_year($dce_row['data']['start_year'], $dce_row['data']['start_month']);
         $dce_row['data']['end'] = _mica_sudies_format_dce_year($dce_row['data']['end_year'], $dce_row['data']['end_month']);
@@ -78,7 +83,8 @@ function _mica_studies_population_normalize_rows(&$dce_rows) {
     }
 }
 
-function _mica_studies_population_view_selection_criteria($node) {
+function _mica_studies_population_view_selection_criteria($node)
+{
     $wrapper = entity_metadata_wrapper('node', $node->nid);
 
     if (!isset($node->content['field_pop_select_criteria'])) {
@@ -138,7 +144,8 @@ function _mica_studies_population_view_selection_criteria($node) {
     }
 }
 
-function _mica_studies_population_view_selection_criteria_item(&$node, $wrapper, $field, $label, $label_plural = NULL) {
+function _mica_studies_population_view_selection_criteria_item(&$node, $wrapper, $field, $label, $label_plural = NULL)
+{
     if (!isset($node->content[$field])) {
         return;
     }
@@ -163,7 +170,8 @@ function _mica_studies_population_view_selection_criteria_item(&$node, $wrapper,
     }
 }
 
-function _mica_studies_population_view_recruitment_sources(&$node) {
+function _mica_studies_population_view_recruitment_sources(&$node)
+{
 
     $wrapper = entity_metadata_wrapper('node', $node);
 
@@ -266,8 +274,7 @@ function _mica_studies_population_view_recruitment_sources(&$node) {
                         . '</div>';
 
                     $node->content['field_pop_specific_pop_other_sp']['#access'] = FALSE;
-                }
-                else {
+                } else {
                     $node->content['field_pop_src_recruit'][$specific_population_index]['#markup'] = '<div class="inner-label">'
                         . $node->content['field_pop_src_recruit'][$specific_population_index]['#markup']
                         . ':</div><div class="inner-value">'
@@ -309,13 +316,15 @@ function _mica_studies_population_view_recruitment_sources(&$node) {
     }
 }
 
-function _mica_studies_population_view_nb_participants(&$node) {
+function _mica_studies_population_view_nb_participants(&$node)
+{
     _mica_studies_population_view_nb($node, 'field_pop_participants_nb', 'field_pop_no_limits_participants');
     _mica_studies_population_view_nb($node, 'field_pop_participants_nb_s', 'field_pop_no_lim_participants_s');
 
 }
 
-function _mica_studies_population_view_nb(&$node, $field_nb, $field_no_limit) {
+function _mica_studies_population_view_nb(&$node, $field_nb, $field_no_limit)
+{
     $wrapper = entity_metadata_wrapper('node', $node->nid);
     if (!isset($node->content[$field_nb])) {
         mica_core_create_empty_field($node, $field_nb);
@@ -338,7 +347,8 @@ function _mica_studies_population_view_nb(&$node, $field_nb, $field_no_limit) {
 /**
  * Delete all populations and DCE associated with the study
  */
-function _mica_studies_population_delete($population) {
+function _mica_studies_population_delete($population)
+{
     $population_wrapper = entity_metadata_wrapper('node', $population->nid);
     watchdog('mica', 'Delete cascade for %population', array('%population' => $population_wrapper->title->value()), WATCHDOG_DEBUG);
     foreach ($population_wrapper->field_pop_dce->getIterator() as $dce_wrapper) {
