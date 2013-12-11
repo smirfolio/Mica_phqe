@@ -5,7 +5,7 @@ function _mica_studies_population_view($node, $view_mode, $langcode)
     _mica_studies_population_view_selection_criteria($node);
     _mica_studies_population_view_recruitment_sources($node);
     _mica_studies_population_view_nb_participants($node);
-    $wrapper = entity_metadata_wrapper('node', $node);
+    $wrapper = entity_metadata_wrapper('node', $node->nid);
 
     $show_draft = (strpos(current_path(), '/draft') > 0 || $node->status == NODE_NOT_PUBLISHED);
     $dce_rows = array();
@@ -52,9 +52,11 @@ function _mica_studies_population_view($node, $view_mode, $langcode)
     }
 
     // Breadcrumbs
-    $study_id = $wrapper->field_pop_study->nid->value();
-    $breadcrumb = _mica_studies_menu_generate_breadcrumbs('node/' . $study_id);
+    $study_id = $wrapper->field_pop_study->value();
 
+    if (!empty($study_id->nid)) {
+        $breadcrumb = _mica_studies_menu_generate_breadcrumbs('node/' . $study_id->nid);
+    }
     // generate specific breadcrumbs for population pages pages
     if (empty($breadcrumb)) {
         $current_breadcrumbs = menu_get_active_breadcrumb();
@@ -92,7 +94,7 @@ function _mica_studies_population_view_selection_criteria($node)
         mica_core_create_empty_field($node, 'field_pop_select_criteria', 'above');
     }
     $_field_pop_select_criteria = field_view_field('node', $wrapper->value(), 'field_pop_select_criteria', array(
-      'label' => 'inline',
+        'label' => 'inline',
         'weight' => 0,
         'type' => module_exists('i18n') ? 'i18n_list_default' : 'list_default'));
 
@@ -105,7 +107,7 @@ function _mica_studies_population_view_selection_criteria($node)
     }
 
     $index = count($node->content['field_pop_select_criteria']['#items']);
-    if (isset($node->content['field_pop_gender'])){
+    if (isset($node->content['field_pop_gender'])) {
         $_field_pop_gendre = field_view_field('node', $wrapper->value(), 'field_pop_gender', array(
             'label' => 'inline',
             'weight' => 0,
@@ -303,7 +305,7 @@ function _mica_studies_population_view_recruitment_sources(&$node)
 
     $other_index = array_search('other', $src_recruit);
     if ($other_index !== FALSE) {
-        $field_pop_recruitment_other = $wrapper->field_pop_recruitment_other->value->value();
+        $field_pop_recruitment_other = $wrapper->field_pop_recruitment_other->value();
         if (!empty($field_pop_recruitment_other)) {
 
             $node->content['field_pop_src_recruit'][$other_index]['#markup'] = '<div class="inner-label">'
@@ -325,8 +327,7 @@ function _mica_studies_population_view_recruitment_sources(&$node)
             . '<div class="inner-value">' . $node->content['field_pop_recruit_supp_info'][0]['#markup'] . '</div>';
         $node->content['field_pop_recruit_supp_info']['#access'] = FALSE;
     }
-
-    if (strlen($node->content['field_pop_src_recruit'][0]['#markup']) === 0) {
+    if (isset($node->content['field_pop_src_recruit'][0]['#markup']) && strlen($node->content['field_pop_src_recruit'][0]['#markup']) === 0) {
         $node->content['field_pop_src_recruit']['#access'] = FALSE;
     }
 }
