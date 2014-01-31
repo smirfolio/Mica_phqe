@@ -11,6 +11,7 @@ function _mica_studies_study_delete($study)
 
     $deleted_nids = array();
     foreach ($study_wrapper->field_study_populations->getIterator() as $pop_wrapper) {
+        dpm($study_wrapper->field_study_populations->nid->value());
         foreach ($pop_wrapper->field_pop_dce->getIterator() as $dce_wrapper) {
             $dce_nid = $dce_wrapper->nid->value();
             if (!isset($deleted_nids[$dce_nid])) {

@@ -207,10 +207,10 @@ function _mica_studies_block_study_populations($study, $show_draft)
                     $content[$index_pop] = node_view($pop, 'full', $language->language);
                     $content[$index_pop]['body']['#markup'] = "</div>";
                 } else {
-                    $content[$index_pop] = node_view($pop, 'full');
+                    $content[$index_pop] = node_view($pop, 'full', $language->language);
                 }
             } else if ($show_draft || (isset($pop->workbench_moderation['published']) && $pop->vid == $pop->workbench_moderation['published']->vid)) {
-                $content[$index_pop] = node_view($pop, 'full');
+                $content[$index_pop] = node_view($pop, 'full', $language->language);
             }
         }
     }

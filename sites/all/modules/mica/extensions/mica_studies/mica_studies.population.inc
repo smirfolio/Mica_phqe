@@ -2,20 +2,27 @@
 
 function _mica_studies_population_view($node, $view_mode, $langcode)
 {
+    $node->title = isset($node->title_field[$langcode][0]['value'])?$node->title_field[$langcode][0]['value']:$node->title ;
     _mica_studies_population_view_selection_criteria($node);
     _mica_studies_population_view_recruitment_sources($node);
     _mica_studies_population_view_nb_participants($node);
-    $wrapper = entity_metadata_wrapper('node', $node->nid);
 
+    $wrapper = entity_metadata_wrapper('node', $node->nid);
     $show_draft = (strpos(current_path(), '/draft') > 0 || $node->status == NODE_NOT_PUBLISHED);
     $dce_rows = array();
     foreach ($wrapper->field_pop_dce->getIterator() as $dce_wrapper) {
-        if (node_access('view', $dce_wrapper->value())) {
+        $lang_current_dce = $dce_wrapper->language->value();
+
+        if (node_access('view', $dce_wrapper->value()) || $show_draft) {
             $desc = NULL;
-            if (!empty($dce_wrapper->value()->body)) {
+            $body_description_dce =$dce_wrapper->body->value();
+            if (!empty($body_description_dce)) {
                 $desc = isset($dce_wrapper->value()->body{$langcode}[0]['summary']) ? $dce_wrapper->value()->body{$langcode}[0]['summary'] : $dce_wrapper->body->summary->value();
-                if (empty($desc)) {
-                    $desc = $dce_wrapper->body->value->value();
+
+
+                if (empty($desc) || $desc=='') {
+                    $desc = isset($dce_wrapper->value()->body[$langcode][0]['value'])?$dce_wrapper->value()->body[$langcode][0]['value']:$dce_wrapper->body->value->value();
+                    $desc= truncate_utf8($desc, 50, TRUE, TRUE);
                 }
             }
             $dce_nid = $dce_wrapper->nid->value();
@@ -23,8 +30,8 @@ function _mica_studies_population_view($node, $view_mode, $langcode)
             if ($wrapper->status->value() == $dce_wrapper->status->value() || $show_draft) {
                 $dce_rows[$dce_nid] = array(
                     'data' => array(
-                        'label' => l($dce_wrapper->title->value(), 'node/' . $dce_nid),
-                        'desc' => truncate_utf8($desc, 50, TRUE, TRUE),
+                        'label' => l($dce_wrapper->title->value(), 'node/' . $dce_nid,array(FALSE,FALSE,$langcode)),
+                        'desc' => $desc,
                         'start_year' => $dce_wrapper->field_dce_start_year->value(),
                         'start_month' => $dce_wrapper->field_dce_start_month->value(),
                         'end_year' => $dce_wrapper->field_dce_end_year->value(),
@@ -53,7 +60,7 @@ function _mica_studies_population_view($node, $view_mode, $langcode)
 
     // Breadcrumbs
     $study_id = $wrapper->field_pop_study->value();
-
+    $breadcrumb=array();
     if (!empty($study_id->nid)) {
         $breadcrumb = _mica_studies_menu_generate_breadcrumbs('node/' . $study_id->nid);
     }

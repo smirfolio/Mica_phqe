@@ -40,10 +40,10 @@ function _mica_studies_block_study_timeline($study, $show_draft = TRUE)
             $legend_items[] = $svg . ' ' . $pop_title;
             $pop_svg[] = array('pop_nid' => $pop_nid, 'svg' => $svg);
             foreach ($pop_wrapper->field_pop_dce->getIterator() as $dce_wrapper) {
-                if (($show_draft && $dce_wrapper->status->value() == 0) || $dce_wrapper->status->value() == 1 && node_access('view', $dce_wrapper->value())) {
+                if (($show_draft && $dce_wrapper->status->value() == 0) || $dce_wrapper->status->value() == 1 && node_access('view', $dce_wrapper->getIdentifier())) {
                     $start_year = $dce_wrapper->field_dce_start_year->value();
                     $end_year = $dce_wrapper->field_dce_end_year->value();
-                    $dce_nid = $dce_wrapper->nid->value();
+                    $dce_nid = $dce_wrapper->getIdentifier();
 
                     if (!empty($start_year) && !empty($end_year)) {
                         $start_month = $dce_wrapper->field_dce_start_month->value();
@@ -52,7 +52,7 @@ function _mica_studies_block_study_timeline($study, $show_draft = TRUE)
 
                         $events[] = array(
                             'color' => $color,
-                            'pop_nid' => $pop_wrapper->nid->value(),
+                            'pop_nid' => $pop_wrapper->getIdentifier(),
                             'pop_title' => $pop_wrapper->title->value(),
                             'dce_nid' => $dce_nid,
                             'dce_title' => $dce_wrapper->title->value(),
@@ -62,10 +62,13 @@ function _mica_studies_block_study_timeline($study, $show_draft = TRUE)
                             'end_month' => empty($end_month) ? 12 : $end_month,
                             'created' => empty($created) ? 0 : intval($created)
                         );
-                        $event_view[] = _mica_studies_block_study_timeline_prepare_modal($dce_nid);
+                        if (isset($dce_nid)) {
+                            $event_view[] = _mica_studies_block_study_timeline_prepare_modal($dce_nid);
+                        }
                     }
                 }
             }
+
         }
     }
     if (empty($events)) {

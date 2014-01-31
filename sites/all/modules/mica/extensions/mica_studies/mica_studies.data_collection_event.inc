@@ -14,7 +14,7 @@ function _mica_studies_dce_view(&$node, $view_mode, $langcode)
     $wrapper = entity_metadata_wrapper('node', $node->nid);
     foreach ($wrapper->field_dce_population->getIterator() as $pop_wrapper) {
         $pop_link = l($pop_wrapper->title->value(), 'node/' . $pop_wrapper->nid->value());
-        $study_id = $pop_wrapper->field_pop_study->nid->value();
+        $study_id = $pop_wrapper->field_pop_study->getIdentifier();
         break;
     }
 
@@ -157,7 +157,7 @@ function _mica_studies_get_dce_study_nid($dce)
 {
     $wrapper = entity_metadata_wrapper('node', $dce);
     foreach ($wrapper->field_dce_population->getIterator() as $pop_wrapper) {
-        return $pop_wrapper->field_pop_study->nid->value();
+        return $pop_wrapper->field_pop_study->getIdentifier();
     }
     return NULL;
 }
