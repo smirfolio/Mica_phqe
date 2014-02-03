@@ -52,19 +52,33 @@ function _mica_studies_dce_view_start_end_year(&$node)
 
 function _mica_studies_dce_view_data_sources(&$node)
 {
+    global $language;
 
     $wrapper = entity_metadata_wrapper('node', $node->nid);
-
     if (!isset($node->content['field_dce_data_sources'])) {
         // create empty field_dce_data_sources if it has no values
         mica_core_create_empty_field($node, 'field_dce_data_sources');
     }
 
     $data_sources = $wrapper->field_dce_data_sources->value();
+    $field_view_data_sources = field_view_field('node', $wrapper->value(), 'field_dce_data_sources', array(
+        'label' => 'inline',
+        'weight' => 11,
+        'type' => module_exists('i18n') ? 'i18n_list_default' : 'list_default',
+    ));
+    $node->content['field_dce_data_sources'] = $field_view_data_sources;
 
     $db_index = array_search('administratives_databases', $data_sources);
     if ($db_index !== FALSE) {
         $field_dce_data_sources_admin_db = $wrapper->field_dce_data_sources_admin_db->value();
+
+        $field_view_dce_data_sources_admin_db = field_view_field('node', $wrapper->value(), 'field_dce_data_sources_admin_db', array(
+            'label' => 'inline',
+            'weight' => 11,
+            'type' => module_exists('i18n') ? 'i18n_list_default' : 'list_default',
+        ));
+        $node->content['field_dce_data_sources_admin_db'] = $field_view_dce_data_sources_admin_db;
+
         if (!empty($field_dce_data_sources_admin_db)) {
             $nb_items = count($field_dce_data_sources_admin_db);
             $content = array();
@@ -85,7 +99,7 @@ function _mica_studies_dce_view_data_sources(&$node)
         }
     }
 
-    if (strlen($node->content['field_dce_data_sources'][0]['#markup']) === 0) {
+    if (isset($node->content['field_dce_data_sources'][0]['#markup']) && strlen($node->content['field_dce_data_sources'][0]['#markup']) === 0) {
         $node->content['field_dce_data_sources']['#access'] = FALSE;
     }
 
@@ -102,6 +116,13 @@ function _mica_studies_dce_view_samples(&$node)
     }
 
     $samples = $wrapper->field_dce_bio_samples_management->value();
+    $field_view_bio_samples_management = field_view_field('node', $wrapper->value(), 'field_dce_bio_samples_management', array(
+        'label' => 'inline',
+        'weight' => 10,
+        'type' => module_exists('i18n') ? 'i18n_list_default' : 'list_default',
+    ));
+    $node->content['field_dce_bio_samples_management'] = $field_view_bio_samples_management;
+
 
     $tissues_index = array_search('tissues', $samples);
     if ($tissues_index !== FALSE) {
@@ -121,7 +142,7 @@ function _mica_studies_dce_view_samples(&$node)
         }
     }
 
-    if (strlen($node->content['field_dce_bio_samples_management'][0]['#markup']) === 0) {
+    if (isset($node->content['field_dce_bio_samples_management'][0]['#markup']) && strlen($node->content['field_dce_bio_samples_management'][0]['#markup']) === 0) {
         $node->content['field_dce_bio_samples_management']['#access'] = FALSE;
     }
 
